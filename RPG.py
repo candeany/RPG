@@ -1,6 +1,8 @@
 import random
 import json
 
+
+#Fórmula para salvar personagens usando o JSON
 def salvar_personagens():
     with open("personagens.json", "w", encoding="utf-8") as arquivo:
         json.dump(
@@ -10,6 +12,7 @@ def salvar_personagens():
             ensure_ascii=False
         )
 
+#Fórmula para carregar personagens usando o JSON
 def carregar_personagens():
     try:
         with open("personagens.json", "r", encoding="utf-8") as arquivo:
@@ -150,8 +153,8 @@ def criar_personagem(personagens):
     salvar_personagens()
     
     return jogador
-
-
+#==================================================
+#Começar o RPG assim que o personagem é selecionado
 def iniciar():
     if not personagens:
         print("Nenhum personagem criado!")
@@ -164,6 +167,7 @@ def iniciar():
         for numero, personagem in enumerate(personagens, start=1):
             print(f"{numero} - {personagem}")
 
+		#Testa se o que a pessoa escreveu é de fato um número
         try:
             escolha = int(
                 input(
@@ -171,7 +175,9 @@ def iniciar():
                     f"(0-{len(personagens)}): "
                 )
             )
-
+        #====================================================
+		#Caso não seja um número, ativa essa parte do código
+		#responsável por impedir que dê ValueError
         except ValueError:
             print("Opção inválida! Digite apenas números!")
             continue
@@ -195,7 +201,8 @@ def iniciar():
 
         return
 
-
+#====================================================================
+#Menu do Jogo, coração do RPG, onde está todas as ações do personagem
 def menu_jogo(personagem):
     while True:
         print(f"\n======== {personagem['nome']} ========")
@@ -247,7 +254,8 @@ def menu_jogo(personagem):
         	print("Saindo...\nAté logo!")
         	break
 
-
+#====================================================================
+#Fórmula para ver o inventário do personagem
 def inventario(personagem):
     if not personagem["inventario"]:
         print(f"{personagem['nome']} está com o inventário vazio!")
@@ -256,7 +264,8 @@ def inventario(personagem):
     print(f"\nInventário de {personagem['nome']}:")
 
     for item, dados in personagem["inventario"].items():
-
+        #================================================
+		#Essa fórmula verifica se o personagem possui algum item do tipo "picareta" no inventário
         if dados.get("tipo") == "picareta":
             durabilidade_maxima = armazem[item]["durabilidade"]
 
